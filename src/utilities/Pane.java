@@ -7,4 +7,12 @@ public class Pane {
 	public Pane(int x, int y) {
 		this.point = new Point(x,y);
 	}
+	
+	public Point getPoint() {
+		return point;
+	}
+	
+	public Ship getShip() {
+		return ship;
+	}
 }

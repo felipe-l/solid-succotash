@@ -21,11 +21,11 @@ public class Point {
         this.y = y;
     }
     
-    public boolean isShot() {
+    public boolean getIsShot() {
     	return isShot;
     }
     
-    public void isShot(boolean shot) {
+    public void setIsShot(boolean shot) {
     	this.isShot = shot;
     }
 
