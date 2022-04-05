@@ -24,11 +24,12 @@ public class gridBoard {
 		return gameBoard[y][x].getPoint().getIsShot();
 	}
 	
+	//Sets point to shot and updates ship class if a ship exists in this pane.
 	public int shoot(int x, int y) { //!TODO Change this to an enum that returns, sunk, hit or miss. For now I will use a number.
 		if (!gameBoard[y][x].getPoint().getIsShot()) {
 			gameBoard[y][x].getPoint().setIsShot(true); // set point as shot.
 			if (gameBoard[y][x].getShip() != null && !gameBoard[y][x].getShip().isSunk()) {
-					boolean didSink = gameBoard[y][x].getShip().shootShip();
+					boolean didSink = gameBoard[y][x].getShip().shootShip(gameBoard[y][x].getPoint());
 					if (didSink) {
 						return 2; //Was Sunk
 					} else {

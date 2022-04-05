@@ -6,6 +6,7 @@ public class Pane {
 	
 	public Pane(int x, int y) {
 		this.point = new Point(x,y);
+		this.ship = null;
 	}
 	
 	public Point getPoint() {
@@ -14,5 +15,9 @@ public class Pane {
 	
 	public Ship getShip() {
 		return ship;
+	}
+	
+	public void setShip(Ship ship) {
+		this.ship = ship;
 	}
 }

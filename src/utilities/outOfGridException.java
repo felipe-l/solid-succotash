@@ -1,5 +1,5 @@
 package utilities;
 
-public class outOfGridException {
+public class outOfGridException extends Exception{
 
 }
