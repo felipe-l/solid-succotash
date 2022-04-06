@@ -34,6 +34,14 @@ public class Point {
         this.y = y;
         this.isShot = false;
     }
+    
+    public boolean coordEquals(Point point) { //Consider re implementation.
+    	if (point.getX() == this.x && point.getY() == this.y) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 
     public Point() {
     }

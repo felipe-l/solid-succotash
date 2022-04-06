@@ -38,13 +38,15 @@ public class Ship {
 	}
 	
 	//changes sunkPoints and floatingPoints on point hit
+	//Checks if any of the points have been sunk, and changes them to sunkPoints list if so.
 	public boolean shootShip(Point point){
-		for (int x = 0; x < sunkPoints.size(); x++) {
-			if (floatingPoints.get(x).equals(point)) {
-				sunkPoints.add(point);
+		for (int x = 0; x < floatingPoints.size(); x++) {
+			if (floatingPoints.get(x).getIsShot()) {
+				sunkPoints.add(floatingPoints.get(x));
 				floatingPoints.remove(x);
 			}
 		}
+		System.out.println("TOTAL POINTS LEFT: " + floatingPoints.size());
 		return isSunk();
 	}
 	
@@ -63,6 +65,14 @@ public class Ship {
 	
 	public ArrayList<Point> getSunk() {
 		return sunkPoints;
+	}
+	
+	public void addFloatingPoint(Point point) {
+		floatingPoints.add(point);
+	}
+	
+	public int getSize() {
+		return this.size;
 	}
 	
 	//Returns if the ship has been destroyed(all points hit).

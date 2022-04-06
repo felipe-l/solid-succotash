@@ -13,6 +13,7 @@ public class controller {
 	public controller (model model) {
 		this.model = model;
 		guessed = false;
+		totalShips = 1; //How many ships in the game
 	} 
 	
 	public int gameStatus() {
@@ -25,9 +26,9 @@ public class controller {
 		}
 	}
 	
-	public void placeShip(int x, int y) {
+	public void placeShip(int x, int y, int size, String direction) {
 		//!TODO adds support for exception if placement not possible
-		model.addShip(x, y);
+		model.addShip(x, y, size, direction);
 	}
 	
 	public int shootPoint(int x, int y) {

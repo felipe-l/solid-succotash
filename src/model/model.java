@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utilities.Guess;
+import utilities.Pane;
 import utilities.Point;
 import utilities.Ship;
 import utilities.gridBoard;
@@ -39,13 +40,41 @@ public class model {
 		return sunkShips.size();
 	}
 
-	public void addShip(int x, int y) {
-		Ship tempShip = new Ship(3, "three");
+	public void addShip(int x, int y, int size, String direction) {
+		//String direction = "EAST";
+		Ship tempShip = new Ship(size, "SHIP-ONE");
 		Point shipCoords = new Point(x,y);
-		tempShip.setCoords(shipCoords, "EAST"); //!TODO add support for other directions.
+		//tempShip.setCoords(shipCoords, direction); //!TODO add support for other directions.
+		
+		if (direction.equals("WEST")) {
+			for (int left = 0; left < tempShip.getSize(); left++) {
+				Pane currCoord = firstPlayer.getPane(x-left, y);
+				tempShip.addFloatingPoint(currCoord.getPoint());
+				currCoord.setShip(tempShip);
+
+			}
+		} else if (direction.equals("EAST")) {
+			for (int right = 0; right < tempShip.getSize(); right++) {
+				Pane currCoord = firstPlayer.getPane(x+right, y);
+				tempShip.addFloatingPoint(currCoord.getPoint());
+				currCoord.setShip(tempShip);
+			}
+		} else if (direction.equals("SOUTH")) {
+			for (int down = 0; down < tempShip.getSize(); down++) {
+				Pane currCoord = firstPlayer.getPane(x, y-down);
+				tempShip.addFloatingPoint(currCoord.getPoint());
+				currCoord.setShip(tempShip);
+			}
+		} else if (direction.equals("NORTH")) {
+			for (int up = 0; up < tempShip.getSize(); up++) {
+				Pane currCoord = firstPlayer.getPane(x, y+up);
+				tempShip.addFloatingPoint(currCoord.getPoint());
+				currCoord.setShip(tempShip);
+			}
+		}
+		
 		ships.add(tempShip);
 		floatingShips.add(tempShip);
-		firstPlayer.getPane(x,y).setShip(tempShip);
 		
 	}
 	
