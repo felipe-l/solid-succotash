@@ -1,6 +1,7 @@
 package controller;
 
 import model.model;
+import utilities.Point;
 import utilities.gridBoard;
 import utilities.outOfGridException;
 
@@ -27,8 +28,7 @@ public class controller {
 		}
 	}
 	
-	public void placeShip(int x, int y, int size, String direction) throws outOfGridException {
-		//!TODO adds support for exception if placement not possible
+	public Point checkCoordinateValidity(int x, int y, int size, String direction) throws outOfGridException {
 		int tempX = x;
 		int tempY = y;
 		if (direction == "SOUTH") {
@@ -41,10 +41,17 @@ public class controller {
 			tempX += size;
 		}
 		
-		if (0 > tempX || tempX > 10 || 0 > tempY || tempY > 10) {
+		if (-1 > tempX || tempX > 10 || -1 > tempY || tempY > 10) { //WEIRD MATH, the -1 makes the gui be able to print at 0 coords
 			throw new outOfGridException("Out of Grid Coords " + tempX + tempY);
+		} else {
+			Point endPoint = new Point(tempX, tempY);
+			return endPoint;
 		}
-		
+	}
+	
+	public void placeShip(int x, int y, int size, String direction) throws outOfGridException {
+		//!TODO adds support for exception if placement not possible
+		checkCoordinateValidity(x, y, size, direction);
 		model.addShip(x, y, size, direction);
 	}
 	
