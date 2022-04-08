@@ -1,9 +1,11 @@
 package controller;
 
+import javafx.scene.paint.Color;
 import model.model;
 import utilities.Point;
 import utilities.gridBoard;
 import utilities.outOfGridException;
+import utilities.shipInterceptionException;
 
 public class controller {
 	
@@ -15,7 +17,7 @@ public class controller {
 	public controller (model model) {
 		this.model = model;
 		guessed = false;
-		totalShips = 1; //How many ships in the game
+		totalShips = 2; //How many ships in the game
 	} 
 	
 	public int gameStatus() {
@@ -42,17 +44,59 @@ public class controller {
 		}
 		
 		if (-1 > tempX || tempX > 10 || -1 > tempY || tempY > 10) { //WEIRD MATH, the -1 makes the gui be able to print at 0 coords
-			throw new outOfGridException("Out of Grid Coords " + tempX + tempY);
+			throw new outOfGridException("Out of Grid Coords " + tempX + " " + tempY);
 		} else {
 			Point endPoint = new Point(tempX, tempY);
 			return endPoint;
 		}
 	}
 	
-	public void placeShip(int x, int y, int size, String direction) throws outOfGridException {
+	public boolean checkShipInterception(int rectX, int rectY, int size, String direction) throws outOfGridException {
+		Point endPoint = checkCoordinateValidity(rectX, rectY, size, direction);
+		if (endPoint.getX() == rectX) {
+			if (rectY < endPoint.getY()) {
+        		for (int y = rectY; y < endPoint.getY(); y++) {
+        			if (model.containsShip(rectX, y)){
+        				return true;
+        			}
+        		}
+			} else {
+        		for (int y = rectY; y > endPoint.getY(); y--) {
+        			if (model.containsShip(rectX, y)){
+        				return true;
+        			}
+        		}
+			}
+		} else {
+			if (rectX < endPoint.getX()) {
+        		for (int x = rectX; x < endPoint.getX(); x++) {
+        			if (model.containsShip(x, rectY)){
+        				return true;
+        			}
+        		}
+			} else {
+        		for (int x = rectX; x > endPoint.getX(); x--) {
+        			if (model.containsShip(x, rectY)){
+        				return true;
+        			}
+        		}
+			}
+		}
+		return false;
+		
+	}
+	
+	public void placeShip(int x, int y, int size, String direction) throws outOfGridException, shipInterceptionException {
 		//!TODO adds support for exception if placement not possible
 		checkCoordinateValidity(x, y, size, direction);
+		if (checkShipInterception(x, y, size, direction)) {
+			throw new shipInterceptionException("Ship cannot be placed here");
+		}
 		model.addShip(x, y, size, direction);
+	}
+	
+	public boolean containsShip(int x, int y) {
+		return model.containsShip(x, y);
 	}
 	
 	public int shootPoint(int x, int y) {

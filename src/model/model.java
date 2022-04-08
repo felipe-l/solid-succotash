@@ -40,6 +40,13 @@ public class model {
 		return sunkShips.size();
 	}
 
+	public boolean containsShip(int x, int y) {
+		if (firstPlayer.getPane(x, y).getShip() == null) {
+			return false;
+		}
+		return true;
+	}
+	
 	public void addShip(int x, int y, int size, String direction) {
 		//String direction = "EAST";
 		Ship tempShip = new Ship(size, "SHIP-ONE");

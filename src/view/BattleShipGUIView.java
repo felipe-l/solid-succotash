@@ -41,6 +41,7 @@ import javafx.util.Duration;
 import model.model;
 import utilities.Point;
 import utilities.outOfGridException;
+import utilities.shipInterceptionException;
 
 /**
  * @author Felipe Lopez
@@ -88,25 +89,33 @@ public class BattleShipGUIView extends Application{
 		if (endPoint.getX() == rectX) {
 			if (rectY < endPoint.getY()) {
         		for (int y = rectY; y < endPoint.getY(); y++) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
-		        	tempRectangle.setFill(Color.BLACK);
+        			if (!controller.containsShip(rectX, y)) {
+        				rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
+        				tempRectangle.setFill(Color.BLACK);
+        			}
         		}
 			} else {
         		for (int y = rectY; y > endPoint.getY(); y--) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
-		        	tempRectangle.setFill(Color.BLACK);
+        			if (!controller.containsShip(rectX, y)) {
+        				rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
+		        		tempRectangle.setFill(Color.BLACK);
+        			}
         		}
 			}
 		} else {
 			if (rectX < endPoint.getX()) {
         		for (int x = rectX; x < endPoint.getX(); x++) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
-		        	tempRectangle.setFill(Color.BLACK);
+        			if (!controller.containsShip(x, rectY)) {
+        				rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
+	        			tempRectangle.setFill(Color.BLACK);
+        			}
         		}
 			} else {
         		for (int x = rectX; x > endPoint.getX(); x--) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
-		        	tempRectangle.setFill(Color.BLACK);
+        			if (!controller.containsShip(x, rectY)) {
+        				rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
+		        		tempRectangle.setFill(Color.BLACK);
+        			}
         		}
 			}
 		}
@@ -117,25 +126,33 @@ public class BattleShipGUIView extends Application{
 		if (endPoint.getX() == rectX) {
 			if (rectY < endPoint.getY()) {
         		for (int y = rectY; y < endPoint.getY(); y++) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
-		        	tempRectangle.setFill(Color.WHITE);
+        			if (!controller.containsShip(rectX, y)) {
+		        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
+			        	tempRectangle.setFill(Color.WHITE);
+        			}
         		}
 			} else {
         		for (int y = rectY; y > endPoint.getY(); y--) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
-		        	tempRectangle.setFill(Color.WHITE);
+        			if (!controller.containsShip(rectX, y)) {
+		        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[y][rectX].getChildren().get(0);
+			        	tempRectangle.setFill(Color.WHITE);
+        			}
         		}
 			}
 		} else {
 			if (rectX < endPoint.getX()) {
         		for (int x = rectX; x < endPoint.getX(); x++) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
-		        	tempRectangle.setFill(Color.WHITE);
+        			if (!controller.containsShip(x, rectY)) {
+		        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
+			        	tempRectangle.setFill(Color.WHITE);
+        			}
         		}
 			} else {
         		for (int x = rectX; x > endPoint.getX(); x--) {
-	        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
-		        	tempRectangle.setFill(Color.WHITE);
+        			if (!controller.containsShip(x, rectY)) {
+		        		rectangleCoord tempRectangle = (rectangleCoord) CoordLabels[rectY][x].getChildren().get(0);
+			        	tempRectangle.setFill(Color.WHITE);
+        			}
         		}
 			}
 		}
@@ -152,6 +169,9 @@ public class BattleShipGUIView extends Application{
 					try {
 						controller.placeShip(rect.xCoord, rect.yCoord, 4, direction);
 					} catch (outOfGridException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (shipInterceptionException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
