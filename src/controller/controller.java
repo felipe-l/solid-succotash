@@ -2,6 +2,7 @@ package controller;
 
 import model.model;
 import utilities.gridBoard;
+import utilities.outOfGridException;
 
 public class controller {
 	
@@ -26,8 +27,24 @@ public class controller {
 		}
 	}
 	
-	public void placeShip(int x, int y, int size, String direction) {
+	public void placeShip(int x, int y, int size, String direction) throws outOfGridException {
 		//!TODO adds support for exception if placement not possible
+		int tempX = x;
+		int tempY = y;
+		if (direction == "SOUTH") {
+			tempY += size;
+		} else if (direction == "NORTH") {
+			tempY -= size;
+		} else if (direction == "WEST") {
+			tempX -= size;
+		} else if (direction == "EAST") {
+			tempX += size;
+		}
+		
+		if (0 > tempX || tempX > 10 || 0 > tempY || tempY > 10) {
+			throw new outOfGridException("Out of Grid Coords " + tempX + tempY);
+		}
+		
 		model.addShip(x, y, size, direction);
 	}
 	

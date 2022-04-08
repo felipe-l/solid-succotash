@@ -6,6 +6,7 @@ import java.util.Scanner;
 import controller.controller;
 import model.model;
 import utilities.gridBoard;
+import utilities.outOfGridException;
 
 public class BattleShipTextView {
 	private int checkStatus;
@@ -19,18 +20,50 @@ public class BattleShipTextView {
 
 		Scanner myObj = new Scanner(System.in);
 		while (checkStatus == 0) {
-			System.out.print("Enter x coord ");
-			String xCoord = myObj.nextLine();  // Read user input
-			int xNum = Integer.parseInt(xCoord);
-			System.out.print("Enter y coord ");
-			String yCoord = myObj.nextLine();  // Read user input
-			int yNum = Integer.parseInt(yCoord);
+			System.out.print("Rotate or next ");
+			String rotate = myObj.nextLine();  // Read user input
+			int counter = 0;
+			while (rotate.equals("r")) {
+				System.out.print("Rotate or next ");
+				rotate = myObj.nextLine();  // Read user input
+				counter += 1;
+				if (counter == 4) {
+					counter = 3;
+				}
+					
+			}
+			String rotationDirection = null;
+			if (counter == 0){
+				rotationDirection = "EAST";
+			} else if (counter == 1) {
+				rotationDirection = "SOUTH";
+			} else if (counter == 2) {
+				rotationDirection = "WEST";
+			} else if (counter == 3) {
+				rotationDirection = "NORTH";
+			}
 			
-			System.out.print("Enter size");
-			String shipLength = myObj.nextLine();  // Read user input
-			int size = Integer.parseInt(shipLength);
-			
-			controller.placeShip(xNum, yNum, size, "EAST");
+			boolean correctCoords = false;
+			while (correctCoords == false) {
+				System.out.print("Enter x coord ");
+				String xCoord = myObj.nextLine();  // Read user input
+				int xNum = Integer.parseInt(xCoord);
+				System.out.print("Enter y coord ");
+				String yCoord = myObj.nextLine();  // Read user input
+				int yNum = Integer.parseInt(yCoord);
+				
+				System.out.print("Enter size");
+				String shipLength = myObj.nextLine();  // Read user input
+				int size = Integer.parseInt(shipLength);
+				
+				try {
+					controller.placeShip(xNum, yNum, size, rotationDirection);
+					correctCoords = true;
+				} catch (outOfGridException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			checkStatus = controller.gameStatus();
 		}
 		System.out.println("Start Shooting");

@@ -61,13 +61,13 @@ public class model {
 			}
 		} else if (direction.equals("SOUTH")) {
 			for (int down = 0; down < tempShip.getSize(); down++) {
-				Pane currCoord = firstPlayer.getPane(x, y-down);
+				Pane currCoord = firstPlayer.getPane(x, y+down);
 				tempShip.addFloatingPoint(currCoord.getPoint());
 				currCoord.setShip(tempShip);
 			}
 		} else if (direction.equals("NORTH")) {
 			for (int up = 0; up < tempShip.getSize(); up++) {
-				Pane currCoord = firstPlayer.getPane(x, y+up);
+				Pane currCoord = firstPlayer.getPane(x, y-up);
 				tempShip.addFloatingPoint(currCoord.getPoint());
 				currCoord.setShip(tempShip);
 			}

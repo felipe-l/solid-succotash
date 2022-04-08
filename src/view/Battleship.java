@@ -12,12 +12,11 @@ public class Battleship {
     	if (args[0].equals("-text")) {
     		BattleShipTextView textGame = new BattleShipTextView();
     		textGame.run();
-    	}
-//    	} else if (args[0].equals("-gui")) {
-//    		Application.launch(BattleShipGUIView.class, args);
-//    	} else {
-//    		Application.launch(BattleShipGUIView.class, args);
-//    	}
+    	} else if (args[0].equals("-gui")) {
+			Application.launch(BattleShipGUIView.class, args);
+		} else {
+			Application.launch(BattleShipGUIView.class, args);
+		}
 	}
 
 }
